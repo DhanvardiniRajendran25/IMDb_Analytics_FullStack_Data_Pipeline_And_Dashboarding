@@ -1,0 +1,48 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.env
+
+# Node/JS
+node_modules/
+dist/
+build/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Data & binaries (keep these OUT of git)
+data/
+datasets/
+raw/
+outputs/
+*.csv
+*.tsv
+*.parquet
+*.xlsx
+*.zip
+*.7z
+*.gz
+*.db
+*.sqlite
+*.mp4
+*.mov
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.sav
+*.pkl
+
+# Logs
+logs/
+*.log
