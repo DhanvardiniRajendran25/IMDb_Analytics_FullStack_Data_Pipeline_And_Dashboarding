@@ -1,0 +1,24 @@
+﻿# Large datasets / raw files
+Dataset/
+*.tsv
+*.csv
+*.gz
+*.zip
+
+# Power BI / Tableau artifacts
+*.pbix
+*.pbit
+*.hyper
+*.twb
+*.twbx
+
+# Parquet extracts
+*.parquet
+
+# temp / OS
+.DS_Store
+Thumbs.db
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+.env
