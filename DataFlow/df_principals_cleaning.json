@@ -1,0 +1,80 @@
+{
+	"name": "df_principals_cleaning",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_principals",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_principal_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "sink2silver"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "derivedColumn4"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          tconst as string,",
+				"          ordering as string,",
+				"          nconst as string,",
+				"          category as string,",
+				"          job as string,",
+				"          characters as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(characters = replace(replace(replace(characters, '[', ''), ']', ''), '\"', ''),",
+				"          job = iif(job == \"\\\\N\" || isNull(job), \"Unknown\", job)) ~> derivedColumn1",
+				"derivedColumn1 derive(characters = iif(characters == \"\\\\N\" || isNull(characters), \"Unknown\", characters)) ~> derivedColumn2",
+				"derivedColumn2 derive(characters = iif(startsWith(job, 'characters:'), \r",
+				"    substring(job, length('characters:') + 1), \r",
+				"    characters),",
+				"          job = iif(startsWith(job, 'characters:'), 'Unknown', job)) ~> derivedColumn3",
+				"derivedColumn3 derive(characters = iif(startsWith(characters, 'characters:'), \r",
+				"    substring(characters, length('characters:') + 1), \r",
+				"    characters)) ~> derivedColumn4",
+				"derivedColumn4 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          tconst as string,",
+				"          ordering as string,",
+				"          nconst as string,",
+				"          category as string,",
+				"          job as string,",
+				"          characters as string",
+				"     ),",
+				"     partitionFileNames:['principals.parquet'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2silver"
+			]
+		}
+	}
+}
