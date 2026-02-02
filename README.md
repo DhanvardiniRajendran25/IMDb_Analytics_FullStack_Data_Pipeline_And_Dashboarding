@@ -40,7 +40,7 @@ This project solves these challenges by building a **robust, scalable BI pipelin
 | Data Orchestration        | Azure Data Factory (ADF) |
 | Data Profiling & Cleaning | Alteryx, Python          |
 | Cloud Data Warehouse      | Snowflake                |
-| Analytics & Visualization | Power BI                 |
+| Analytics & Visualization | Power BI & Tableau       |
 
 ---
 
